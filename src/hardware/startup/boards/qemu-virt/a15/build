@@ -20,12 +20,12 @@
     # Interrupt for the UART has number 1 but in GIC first 32 IRQs
     # are internal so first external interrupt number will be 33
     # however in the irq handler routine IRQ number parameter will be 1 (resolved)
-    devc-primecell 0x9000000^2,33
-    waitfor /dev/ser1 4
-    reopen
-    devc-pty
+    #devc-primecell 0x9000000^2,33
+    #waitfor /dev/ser1 4
+    #reopen
+    #devc-pty
 
-    PCI_HW_MODULE=/lib/dll/pci/pci_hw-qemu-virt.so
+    PCI_HW_MODULE=/lib/dll/pci/libpci_hw-qemu-virt.so
     PCI_SLOG_MODULE=/lib/dll/pci/pci_slog.so
     PCI_DEBUG_MODULE=/lib/dll/pci/pci_debug.so
     PCI_BKWD_COMPAT_MODULE=/lib/dll/pci/pci_bkwd_compat.so
@@ -73,7 +73,6 @@ pci-server
 /lib/libpci.so=libpci.so
 /lib/libpci.so.1.2=libpci.so
 /lib/dll/pci/=dll/pci
-/lib/dll/pci/pci_hw-qemu-virt.so=libpci_hw-qemu-virt.so
 
 ###########################################################################
 ## NETWORK driver and libraries (depends on PCI)
@@ -162,7 +161,7 @@ waitfor
 /etc/system/config/pci/pci_server.cfg = {
 [envars]
 
-#PCI_HW_MODULE=/lib/dll/pci/pci_hw-qemu-virt.so
+PCI_HW_MODULE=/lib/dll/pci/libpci_hw-qemu-virt.so
 PCI_SLOG_MODULE=/lib/dll/pci/pci_slog.so
 PCI_DEBUG_MODULE=/lib/dll/pci/pci_debug.so
 PCI_BASE_VERBOSITY=4
