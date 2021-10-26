@@ -1,0 +1,13 @@
+%C - Resource seeding utility
+
+This utility seeds the system resource manager database.
+
+options:
+
+mem=[name=]start,end    The start and end addresses, subclass name optional
+irq=[name=]start,end    The start and end IRQ vectors, subclass name optional
+ioport=[name=]start,end The start and end ioport addresses, subclass name optional
+dma=[name=]start,end    The start and end DMA channels, subclass name optional
+pcimem=[name=]start,end The start and end PCI memory addresses, subclass name optional
+
+note: subclass name is optional, it needs to start with a non-digit charactor.

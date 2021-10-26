@@ -1,0 +1,3 @@
+define PINFO
+PINFO DESCRIPTION=TI DRA72X J6ECO Cortex-A15 startup
+endef

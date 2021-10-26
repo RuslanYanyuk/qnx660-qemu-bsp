@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<module name="devc-ser8250">
+	<type>Element</type>
+	<classification>Driver</classification>
+
+	<description>
+	        <short>Serial driver for 8250's and compatibles</short>
+	        <abstract>
+	                <![CDATA[The devc-ser8250 manager is a small serial device manager for QNX Neutrino. It can support any number of serial ports using 8250s, 14450s or 16550s.]]>
+	        </abstract>
+	</description>
+
+	<supports>
+		<availability ref="ostargets"/>
+     </supports>
+
+	<source available="false">
+		<location type="">.</location>
+	</source>
+	<GroupOwner>hw</GroupOwner>
+	<RuntimeComponent>Neutrino RTOS</RuntimeComponent>
+
+
+	<contents>
+		<component id="ser8250" generated="true">
+			<location basedir="{cpu}/{o|endian}"
+				 runtime="true">devc-ser8250</location>
+		</component>
+		<package isInternal="true">
+		<component id="tser8250" generated="true">
+			<location basedir="{cpu}/{o|endian}"
+				 runtime="true">devc-tser8250</location>
+		</component>
+		</package>
+		<package name="internal-sequoia" isInternal="true">
+			<component id="ser8250-sequoia" generated="true">
+				<location basedir="mips/be.sequoia"
+					 runtime="true">devc-ser8250-sequoia</location>
+			</component>
+		</package>
+		<package isInternal="true">
+			<component id="ser8250-jacinto" generated="true">
+				<location basedir="arm/le.jacinto"
+					 runtime="true">devc-ser8250-jacinto</location>
+			</component>
+		</package>
+		<package name="internal-pa6t" isInternal="true">
+			<component id="ser8250-pa6t" generated="true">
+				<location basedir="ppc/pa6t.be"
+					 runtime="true">devc-ser8250-pa6t</location>
+			</component>
+		</package>
+
+		<package name="internal-tegra2" isInternal="true">
+			<component id="ser8250-tegra2" generated="true">
+				<location basedir="arm/le.tegra2"
+					 runtime="true">devc-ser8250-tegra2</location>
+				<location basedir="arm/le.tegra2.v7"
+					 runtime="true">devc-ser8250-tegra2</location>
+			</component>
+		</package>
+		<package name="internal-mpc8540" isInternal="true">
+			<component id="ser8250-mpc8540" generated="true">
+				<location basedir="ppc/mpc8540.be"
+					 runtime="true">devc-ser8250-mpc8540</location>
+				<location basedir="ppc/mpc8540.be.spe"
+					 runtime="true">devc-ser8250-mpc8540</location>
+			</component>
+			<component id="tser8250-mpc8540" generated="true">
+				<location basedir="ppc/mpc8540.be"
+					 runtime="true">devc-tser8250-mpc8540</location>
+			</component>
+		</package>
+	</contents>
+
+	<requires>
+		<part rootMacro="LIBIOCHAR_ROOT" build="true" location="lib/io-char"/>
+		<part build="false" location="hardware/devc"/>
+	</requires>
+
+</module>
+
+
