@@ -2,3 +2,9 @@
 .idea
 cmake-build-debug
 build.pinfo
+install/*
+images/*
+so-le-v7/
+le.v7/
+o.le.v7/
+a.le.v7/
