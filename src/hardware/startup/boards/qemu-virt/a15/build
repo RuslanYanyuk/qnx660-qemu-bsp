@@ -13,20 +13,16 @@
     display_msg Welcome to QNX Neutrino 6.6.0
     display_msg **********************************
 
+    slogger
     random -i12 -i14 -i15
 
-    #display_msg Starting Serial Port driver...
+    display_msg Starting Serial Port driver...
     # Interrupt for the UART has number 1 but in GIC first 32 IRQs
     # are internal so first external interrupt number will be 33
     # however in the irq handler routine IRQ number parameter will be 1 (resolved)
-    #devc-primecell 0x9000000^2,33
-    #waitfor /dev/ser1 4
-    #reopen
-
-    slogger
-    pipe
-
-    #inetd
+    devc-primecell 0x9000000^2,33
+    waitfor /dev/ser1 4
+    reopen
     devc-pty
 
     PCI_HW_MODULE=/lib/dll/pci/pci_hw-qemu-virt.so
@@ -47,6 +43,9 @@
     io-pkt-v4 -v -d rtl did=0x8139,vid=0x10ec,verbose=4
     waitfor /dev/socket
     dhcp.client
+    inetd
+
+    pipe
 
     SYSNAME=nto
     TERM=qansi
@@ -59,8 +58,10 @@
 
 
 ###########################################################################
-## Redirect console messages
+## Console support
 ###########################################################################
+devc-primecell
+devc-pty
 [type=link] /bin/sh=/proc/boot/ksh
 [type=link] /dev/console=/dev/ser1
 [type=link] /tmp=/dev/shmem
@@ -72,13 +73,14 @@ pci-server
 /lib/libpci.so=libpci.so
 /lib/libpci.so.1.2=libpci.so
 /lib/dll/pci/=dll/pci
-/lib/dll/pci/pci_hw-qemu-virt.so=/home/ruslan/Temp/QNX/startup/dra72x-evm/src/hardware/hw-mod-qemu/arm/so-le-v7/libhw-mod-qemu.so
+/lib/dll/pci/pci_hw-qemu-virt.so=libpci_hw-qemu-virt.so
 
 ###########################################################################
 ## NETWORK driver and libraries (depends on PCI)
 ###########################################################################
 io-pkt-v4
 dhcp.client
+inetd
 devnp-shim.so
 devn-rtl.so
 libsocket.so
@@ -88,7 +90,7 @@ libssl.so.2
 libbacktrace.so
 
 ###########################################################################
-## Components
+## Core components
 ###########################################################################
 libslog2.so.1
 libslog2parse.so.1
@@ -102,11 +104,6 @@ libdisputil.so.2
 [type=link] /usr/lib/ldqnx.so.2 = /proc/boot/libc.so
 [type=link] /usr/lib/libc.so.2 = /proc/boot/libc.so.3
 
-# Executables
-devc-ser8250
-devc-pty
-inetd
-
 /bin/login=login
 /bin/passwd=passwd
 
@@ -114,6 +111,7 @@ inetd
 ## General commands
 ###########################################################################
 [data=c]
+[+raw] pci-tool
 cat
 chmod
 cp
@@ -121,9 +119,12 @@ date
 dumper
 echo
 fdisk
+fs-cifs
+fs-nfs3
 grep
 hogs
 if_up
+ifconfig
 ksh
 ln
 ls
@@ -133,12 +134,15 @@ mkqnx6fs
 more
 mount
 mv
+nicinfo
 on
 pidin
+ping
 pipe
 random
 resource_seed
 rm
+rsrcdb_query
 rtc
 shutdown
 slay
@@ -151,16 +155,10 @@ umount
 uname
 use
 waitfor
-[+raw] pci-tool
-rsrcdb_query
-nicinfo
-ping
-fs-cifs
-fs-nfs3
-ifconfig
 
-/etc=/home/ruslan/Temp/QNX/startup/dra72x-evm/prebuilt/armle-v7/etc
-
+###########################################################################
+## System configs
+###########################################################################
 /etc/system/config/pci/pci_server.cfg = {
 [envars]
 

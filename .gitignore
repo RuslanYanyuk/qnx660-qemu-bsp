@@ -1,0 +1,4 @@
+.directory
+.idea
+cmake-build-debug
+build.pinfo
